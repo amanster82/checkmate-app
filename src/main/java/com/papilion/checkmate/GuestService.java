@@ -36,7 +36,7 @@ public class GuestService {
   
 
     public void readFile(Event event) throws FileNotFoundException{
-        File myObj = new File("Orders.csv");
+        File myObj = new File("./"+event.GuestListFile);
         Scanner myReader = new Scanner(myObj);
         
         ArrayList<Guest> guestList = new ArrayList<>();

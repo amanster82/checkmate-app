@@ -33,8 +33,8 @@ public class MemberService {
     // }
   
 
-    public void readFile() throws FileNotFoundException{
-        File myObj = new File("members_list.csv");
+    public void readFile(Event event) throws FileNotFoundException{
+        File myObj = new File("./"+event.MembershipFile);
         Scanner myReader = new Scanner(myObj);
         Member myMember = new Member();
         ArrayList<Guest> guestList = new ArrayList<>();

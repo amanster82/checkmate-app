@@ -20,11 +20,13 @@ public class EventController {
 
     private final EventService eventService;
     private final GuestService guestService;
+    private final MemberService memberService;
 
     @Autowired
-    public EventController(EventService eventService, GuestService guestService){
+    public EventController(EventService eventService, GuestService guestService, MemberService memberService){
         this.eventService = eventService;
         this.guestService = guestService;
+        this.memberService = memberService;
     }
 
     
@@ -33,6 +35,7 @@ public class EventController {
         Event myEvent = eventService.addNewEvent(event);
         try {
             guestService.readFile(myEvent);
+            memberService.readFile(myEvent);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
