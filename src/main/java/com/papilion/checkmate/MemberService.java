@@ -22,19 +22,19 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    @PostConstruct
-    public void init() {
-        try {
-            readFile();
-        } catch (FileNotFoundException e) {
-            System.err.println("Error reading the CSV file: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+    // @PostConstruct
+    // public void init() {
+    //     try {
+    //         readFile();
+    //     } catch (FileNotFoundException e) {
+    //         System.err.println("Error reading the CSV file: " + e.getMessage());
+    //         e.printStackTrace();
+    //     }
+    // }
   
 
     public void readFile() throws FileNotFoundException{
-        File myObj = new File("uploads/TESTF/members.csv");
+        File myObj = new File("members_list.csv");
         Scanner myReader = new Scanner(myObj);
         Member myMember = new Member();
         ArrayList<Guest> guestList = new ArrayList<>();

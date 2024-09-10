@@ -6,6 +6,7 @@ import MemberTable from './MemberTable';
 import pmpProData from './memberData.json';
 import rsvpData from './rsvpData.json';
 import { Spinner } from "@blueprintjs/core";
+import axios from 'axios';
 
 
 function Dashboard() {
@@ -32,6 +33,16 @@ function Dashboard() {
         //console.log(array);
         setUserData(array);
 
+    },[])
+
+    React.useEffect(() =>{
+        console.log("running useeffect")
+        let url = 'http://localhost:8080/api/v1/guest-member-data';
+        const fetchData = async () => {
+            const data = await axios.get(url);
+            console.log("this is the data...", data);
+        }
+        fetchData();
     },[])
 
     function search(e: any){

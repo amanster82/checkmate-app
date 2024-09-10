@@ -17,7 +17,7 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public void addNewEvent(Event event) {
+    public Event addNewEvent(Event event) {
         //Create a file Object for Directory
         File directoryPath = new File(UPLOAD_DIR +"\\" + event.getTitle()); 
         //List all files and directories
@@ -35,6 +35,7 @@ public class EventService {
             }
         }
 		   eventRepository.save(event);
+           return event;
     }
 
 

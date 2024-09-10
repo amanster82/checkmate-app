@@ -2,6 +2,8 @@ package com.papilion.checkmate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
@@ -14,6 +16,18 @@ public class Guest {
     protected String firstName;
     protected String lastName;
     protected String email;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event_id;
+
+    public Event getEventId() {
+        return event_id;
+    }
+
+    public void setEventId(Event event_id) {
+        this.event_id = event_id;
+    }
 
     public Guest() {}
 

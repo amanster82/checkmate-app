@@ -24,21 +24,21 @@ public class GuestService {
         this.guestRepository = guestRepository;
     }
 
-    @PostConstruct
-    public void init() {
-        try {
-            readFile();
-        } catch (FileNotFoundException e) {
-            System.err.println("Error reading the CSV file: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+    // @PostConstruct
+    // public void init() {
+    //     try {
+    //         readFile();
+    //     } catch (FileNotFoundException e) {
+    //         System.err.println("Error reading the CSV file: " + e.getMessage());
+    //         e.printStackTrace();
+    //     }
+    // }
   
 
-    public void readFile() throws FileNotFoundException{
-        File myObj = new File("uploads/TESTF/orders-1.csv");
+    public void readFile(Event event) throws FileNotFoundException{
+        File myObj = new File("Orders.csv");
         Scanner myReader = new Scanner(myObj);
-        Guest myGuest = new Guest();
+        
         ArrayList<Guest> guestList = new ArrayList<>();
         Boolean firstLine = true;
         String [] dd;
@@ -47,7 +47,8 @@ public class GuestService {
         while (myReader.hasNextLine()) {
 
           String data = myReader.nextLine();
-          
+          Guest myGuest = new Guest();
+
           if(firstLine){
             firstLine = false;  
             continue;
@@ -56,6 +57,7 @@ public class GuestService {
           dd = data.split(",");
           id = dd[1].replace("\"", "").trim();
           System.out.println("MY ID IS "+id+"L".replaceAll("\\D", ""));
+          myGuest.setEventId(event);
           myGuest.setId(Long.parseLong(id));
           myGuest.setPaymentMethod(dd[14].replace("\"", ""));
           myGuest.setFirstName(dd[15].replace("\"", ""));

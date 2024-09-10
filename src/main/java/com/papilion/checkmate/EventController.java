@@ -1,5 +1,6 @@
 package com.papilion.checkmate;
 
+import java.io.FileNotFoundException;
 import java.util.Date;
 
 import org.apache.tomcat.util.http.parser.MediaType;
@@ -18,16 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventController {
 
     private final EventService eventService;
+    private final GuestService guestService;
 
     @Autowired
-    public EventController(EventService eventService){
+    public EventController(EventService eventService, GuestService guestService){
         this.eventService = eventService;
+        this.guestService = guestService;
     }
 
     
     @PostMapping
     public void registerNewEvent(@RequestBody Event event){ 
-        eventService.addNewEvent(event);
+        Event myEvent = eventService.addNewEvent(event);
+        try {
+            guestService.readFile(myEvent);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+
     }
     
 

@@ -19,10 +19,11 @@ import java.util.List;
 public class FileUploadController {
 
     // Define the directory where files will be stored
-    private String UPLOAD_DIR = "uploads/";
+    private String UPLOAD_DIR = "./uploads/";
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadMultipleFiles(@RequestParam("files") List<MultipartFile> files, @RequestParam("title") String str) {
+        System.out.println("GETS HERE" + str);
         if (files.isEmpty() || str.isEmpty() || str.equals("undefined")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please select files to upload.");
         }else{
@@ -46,15 +47,19 @@ public class FileUploadController {
             }
         }        
 
-        UPLOAD_DIR = "uploads/";
+        UPLOAD_DIR = "./uploads/";
 
         return null;
     }
 
     private void makeDirectoryIfNotExist(String imageDirectory) {
+        System.out.println("WHAT IS THE IMGAGEDIRECTORY?" + imageDirectory);        
         File directory = new File(imageDirectory);
+        System.out.println("WHAT IS THE DIRECTORY "+ directory);
+        
         if (!directory.exists()) {
-            directory.mkdir();
+            System.out.println("DOES IT GET INSIDE HER?E?????");
+            directory.mkdirs();
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.papilion.checkmate;
 import java.util.Date;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -20,6 +21,9 @@ public class Event {
     protected String coverImage;
     protected String MembershipFile;
     protected String GuestListFile;
+
+    @OneToMany(mappedBy = "event_id")
+    private Set<Guest> guests;
 
     public Event() {
     }
