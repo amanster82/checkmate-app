@@ -1,10 +1,25 @@
 package com.papilion.checkmate;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 
-public class GuestMemberDTO {
+import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="Attendee")
+public class Attendee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate the ID
+    private int Id;
     private Long guestId;
-    private Integer memberId;
+    private Integer memberId; // Boxed type to allow null values
     private String guestFirstName;
     private String memberFirstName;
     private String guestEmail;
@@ -14,11 +29,19 @@ public class GuestMemberDTO {
     private String memberUsername; // Changed to camelCase
     private LocalDate memberJoinedDate; // Changed to camelCase
     private LocalDate memberExpireDate; // Changed to camelCase
+    private boolean checkedInStatus;
+    private boolean verifiedMember;
 
-    public GuestMemberDTO(Long guestId, Integer memberId, String guestFirstName, String memberFirstName, 
+
+    // No-argument constructor (required by JPA/Hibernate)
+    public Attendee() {
+    }
+
+    public Attendee (int Id, Long guestId, int memberId, String guestFirstName, String memberFirstName, 
                           String guestEmail, String memberEmail, String guestPaymentMethod, 
                           String memberLevel, String memberUsername, LocalDate memberJoinedDate, 
-                          LocalDate memberExpireDate) {
+                          LocalDate memberExpireDate, boolean checkedInStatus, boolean verifiedMember) {
+        this.Id = Id;
         this.guestId = guestId;
         this.memberId = memberId;
         this.guestFirstName = guestFirstName;
@@ -30,9 +53,24 @@ public class GuestMemberDTO {
         this.memberUsername = memberUsername;
         this.memberJoinedDate = memberJoinedDate;
         this.memberExpireDate = memberExpireDate;
+        this.checkedInStatus = checkedInStatus;
+        this.verifiedMember = verifiedMember;
     }
 
-    // Getters and Setters
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attendee attendee = (Attendee) o;
+        return Objects.equals(guestId, attendee.guestId) &&
+               Objects.equals(memberId, attendee.memberId) &&
+               Objects.equals(guestEmail, attendee.guestEmail);  // Adjust the comparison fields as necessary
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(guestId, memberId, guestEmail);  // Ensure hashCode matches the fields used in equals()
+    }
 
     public Long getGuestId() {
         return guestId;
@@ -42,12 +80,11 @@ public class GuestMemberDTO {
         this.guestId = guestId;
     }
 
-    public Integer getMemberId() {
-        int id = (memberId != null) ? memberId : 0;  // Default to 0 if memberId is null
-        return id;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setMemberId(Integer memberId) {
+    public void setMemberId(int memberId) {
         this.memberId = memberId;
     }
 
@@ -119,24 +156,42 @@ public class GuestMemberDTO {
         return memberExpireDate;
     }
 
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public boolean isCheckedInStatus() {
+        return checkedInStatus;
+    }
+
+    public void setCheckedInStatus(boolean checkedInStatus) {
+        this.checkedInStatus = checkedInStatus;
+    }
+
+    public boolean isVerifiedMember() {
+        return verifiedMember;
+    }
+
+    public void setVerifiedMember(boolean verifiedMember) {
+        this.verifiedMember = verifiedMember;
+    }
+
     public void setMemberExpireDate(LocalDate memberExpireDate) {
         this.memberExpireDate = memberExpireDate;
     }
 
     @Override
     public String toString() {
-        return "GuestMemberDTO{" +
-                "guestId=" + guestId +
-                ", memberId=" + memberId +
-                ", guestFirstName='" + guestFirstName + '\'' +
-                ", memberFirstName='" + memberFirstName + '\'' +
-                ", guestEmail='" + guestEmail + '\'' +
-                ", memberEmail='" + memberEmail + '\'' +
-                ", guestPaymentMethod='" + guestPaymentMethod + '\'' +
-                ", memberLevel='" + memberLevel + '\'' +
-                ", memberUsername='" + memberUsername + '\'' +
-                ", memberJoinedDate=" + memberJoinedDate +
-                ", memberExpireDate=" + memberExpireDate +
-                '}';
+        return "Attendee [Id=" + Id + ", guestId=" + guestId + ", memberId=" + memberId + ", guestFirstName="
+                + guestFirstName + ", memberFirstName=" + memberFirstName + ", guestEmail=" + guestEmail
+                + ", memberEmail=" + memberEmail + ", guestPaymentMethod=" + guestPaymentMethod + ", memberLevel="
+                + memberLevel + ", memberUsername=" + memberUsername + ", memberJoinedDate=" + memberJoinedDate
+                + ", memberExpireDate=" + memberExpireDate + ", checkedInStatus=" + checkedInStatus
+                + ", verifiedMember=" + verifiedMember + "]";
     }
+    
 }

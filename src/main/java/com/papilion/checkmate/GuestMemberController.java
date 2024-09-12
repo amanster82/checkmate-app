@@ -17,7 +17,7 @@ public class GuestMemberController {
     private GuestMemberService guestMemberService;
     
     @GetMapping
-    public List<GuestMemberDTO> getGuestMemberData() {
-        return guestMemberService.getGuestMemberData();
+    public List<Attendee> getGuestMemberData() {
+        return guestMemberService.processAndInsertData();
     }
 }
