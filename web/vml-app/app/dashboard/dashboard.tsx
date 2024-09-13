@@ -35,9 +35,9 @@ function Dashboard() {
 
     },[])
 
-    React.useEffect(() =>{
+    React.useEffect(() => {
         console.log("running useeffect")
-        let url = 'http://localhost:8080/api/v1/guest-member-data';
+        let url = 'http://localhost:8080/api/v1/guest-member-data/1';
         const fetchData = async () => {
             const data = await axios.get(url);
             console.log("this is the data...", data);

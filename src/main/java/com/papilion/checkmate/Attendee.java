@@ -9,6 +9,8 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +20,11 @@ public class Attendee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate the ID
     private int Id;
+    
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event eventId;
+    
     private Long guestId;
     private Integer memberId; // Boxed type to allow null values
     private String guestFirstName;
@@ -32,16 +39,14 @@ public class Attendee {
     private boolean checkedInStatus;
     private boolean verifiedMember;
 
+    public Attendee(){}
 
-    // No-argument constructor (required by JPA/Hibernate)
-    public Attendee() {
-    }
-
-    public Attendee (int Id, Long guestId, int memberId, String guestFirstName, String memberFirstName, 
+    public Attendee (int Id, Event eventId, Long guestId, int memberId, String guestFirstName, String memberFirstName, 
                           String guestEmail, String memberEmail, String guestPaymentMethod, 
                           String memberLevel, String memberUsername, LocalDate memberJoinedDate, 
                           LocalDate memberExpireDate, boolean checkedInStatus, boolean verifiedMember) {
         this.Id = Id;
+        this.eventId = eventId;
         this.guestId = guestId;
         this.memberId = memberId;
         this.guestFirstName = guestFirstName;
@@ -70,6 +75,18 @@ public class Attendee {
     @Override
     public int hashCode() {
         return Objects.hash(guestId, memberId, guestEmail);  // Ensure hashCode matches the fields used in equals()
+    }
+
+    public Event getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Event eventId) {
+        this.eventId = eventId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
     public Long getGuestId() {

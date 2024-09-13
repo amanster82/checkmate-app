@@ -1,6 +1,7 @@
 package com.papilion.checkmate;
 
 import java.io.File;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,16 @@ public class EventService {
            return event;
     }
 
+    public Event getEventById(int eventId) {
+        // Use the eventRepository to find the Event by its ID
+        Optional<Event> eventOptional = eventRepository.findById((long) eventId);
+        
+        // If the event is found, return it; otherwise, throw an exception
+        if (eventOptional.isPresent()) {
+            return eventOptional.get();
+        } else {
+            throw new RuntimeException("Event with ID " + eventId + " not found.");
+        }
+    }
 
 }

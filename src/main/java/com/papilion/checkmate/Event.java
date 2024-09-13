@@ -22,7 +22,7 @@ public class Event {
     protected String MembershipFile;
     protected String GuestListFile;
 
-    @OneToMany(mappedBy = "event_id")
+    @OneToMany(mappedBy = "eventId")
     private Set<Guest> guests;
 
     public Event() {

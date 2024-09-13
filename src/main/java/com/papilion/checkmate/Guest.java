@@ -19,14 +19,14 @@ public class Guest {
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    private Event event_id;
+    private Event eventId;
 
     public Event getEventId() {
-        return event_id;
+        return eventId;
     }
 
     public void setEventId(Event event_id) {
-        this.event_id = event_id;
+        this.eventId = event_id;
     }
 
     public Guest() {}
