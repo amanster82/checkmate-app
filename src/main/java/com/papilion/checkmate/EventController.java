@@ -2,6 +2,7 @@ package com.papilion.checkmate;
 
 import java.io.FileNotFoundException;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path="api/v1/event")
+@RequestMapping(path="api/v1/events")
 public class EventController {
 
     private final EventService eventService;
@@ -40,9 +41,13 @@ public class EventController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-
     }
+
+
+    @GetMapping("/getAllEvents")
+	public List<Event> getEvents(){
+        return eventService.getAllEvents();
+	}
     
 
 }

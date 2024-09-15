@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,6 +86,14 @@ public class MemberService {
         }
         myReader.close();
     }
+
+    public List<Member> searchAll(){
+        return memberRepository.findAll();
+    }
+
+    public List<Member> searchByName(String name){
+      return memberRepository.findByFirstNamePattern(name);
+  }
 }
 
 

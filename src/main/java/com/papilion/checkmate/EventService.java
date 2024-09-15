@@ -1,6 +1,8 @@
 package com.papilion.checkmate;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,10 @@ public class EventService {
         } else {
             throw new RuntimeException("Event with ID " + eventId + " not found.");
         }
+    }
+
+    public ArrayList<Event> getAllEvents(){
+        return eventRepository.findAll();
     }
 
 }
