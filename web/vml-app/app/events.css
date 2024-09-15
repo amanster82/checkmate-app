@@ -3,5 +3,13 @@
 }
 
 .event-card{
+    width: 800px;
+}
+
+.event-header{
     text-align: center;
+}
+
+.flex{
+    display: flex;
 }
