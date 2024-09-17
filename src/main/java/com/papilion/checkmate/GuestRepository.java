@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface GuestRepository extends JpaRepository<Guest, Long>{
 
     //Return every guest    
+    @SuppressWarnings("null")
     ArrayList<Guest> findAll();
     
 }

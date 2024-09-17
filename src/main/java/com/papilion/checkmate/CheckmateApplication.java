@@ -1,6 +1,5 @@
 package com.papilion.checkmate;
 
-import java.io.FileNotFoundException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

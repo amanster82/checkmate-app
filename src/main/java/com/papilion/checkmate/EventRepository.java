@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface EventRepository extends JpaRepository<Event, Long>{
 
     //Return every event    
+    @SuppressWarnings("null")
     ArrayList<Event> findAll();
     
 }

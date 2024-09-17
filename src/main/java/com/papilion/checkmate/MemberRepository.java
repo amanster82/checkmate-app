@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository extends JpaRepository<Member, Long>{
 
     //Return every Member    
+    @SuppressWarnings("null")
     ArrayList<Member> findAll();
     
 
