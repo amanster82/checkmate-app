@@ -19,7 +19,7 @@ public class Event {
     protected Date eventDate;
     
     protected String coverImage;
-    protected String MembershipFile;
+    // protected String MembershipFile;
     protected String GuestListFile;
 
     @OneToMany(mappedBy = "eventId")
@@ -68,13 +68,13 @@ public class Event {
         this.coverImage = coverImage;
     }
 
-    public String getMembershipFile() {
-        return MembershipFile;
-    }
+    // public String getMembershipFile() {
+    //     return MembershipFile;
+    // }
 
-    public void setMembershipFile(String membershipFile) {
-        MembershipFile = membershipFile;
-    }
+    // public void setMembershipFile(String membershipFile) {
+    //     MembershipFile = membershipFile;
+    // }
 
     public String getGuestListFile() {
         return GuestListFile;
@@ -87,7 +87,7 @@ public class Event {
     @Override
     public String toString() {
         return "Event [id=" + id + ", Title=" + Title + ", creationDate=" + creationDate + ", eventDate=" + eventDate
-                + ", coverImage=" + coverImage + ", MembershipFile=" + MembershipFile + ", GuestListFile="
+                + ", coverImage=" + coverImage + ", GuestListFile="
                 + GuestListFile + "]";
     }
 }

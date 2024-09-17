@@ -36,10 +36,9 @@ public class GuestService {
   
 
     public void readFile(Event event) throws FileNotFoundException{
+        System.out.println("WHAT IS MY EVENT"+ event);
         File myObj = new File("./"+event.GuestListFile);
         Scanner myReader = new Scanner(myObj);
-        
-        ArrayList<Guest> guestList = new ArrayList<>();
         Boolean firstLine = true;
         String [] dd;
         String id;
@@ -55,7 +54,7 @@ public class GuestService {
           }
 
           dd = data.split(",");
-          id = dd[1].replace("\"", "").trim();
+          id = dd[1].replace("\"", "").trim(); //removeQuotes
           System.out.println("MY ID IS "+id+"L".replaceAll("\\D", ""));
           myGuest.setEventId(event);
           myGuest.setId(Long.parseLong(id));
@@ -65,6 +64,8 @@ public class GuestService {
           myGuest.setEmail(dd[17].replace("\"", ""));
           
           guestRepository.save(myGuest);
+
+          System.out.println(myGuest.toString());
         }
         myReader.close();
     }

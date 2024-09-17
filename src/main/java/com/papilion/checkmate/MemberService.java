@@ -4,14 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jakarta.annotation.PostConstruct;
-
-
 
 @Service
 public class MemberService {
@@ -34,11 +30,11 @@ public class MemberService {
     // }
   
 
-    public void readFile(Event event) throws FileNotFoundException{
-        File myObj = new File("./"+event.MembershipFile);
+    public void readFile() throws FileNotFoundException{
+        File myObj = new File("./uploads/Membership");
+        myObj=myObj.listFiles()[0];
         Scanner myReader = new Scanner(myObj);
         Member myMember = new Member();
-        ArrayList<Guest> guestList = new ArrayList<>();
         Boolean firstLine = true;
         String [] dd;
         String id;

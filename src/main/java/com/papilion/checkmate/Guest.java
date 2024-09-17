@@ -21,13 +21,6 @@ public class Guest {
     @JoinColumn(name = "event_id")
     private Event eventId;
 
-    public Event getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Event event_id) {
-        this.eventId = event_id;
-    }
 
     public Guest() {}
 
@@ -68,10 +61,23 @@ public class Guest {
         this.email = email;
     }
 
+    public int getEventId() {
+        return eventId.getId();
+    }
+
+    public void setEventId(Event event_id) {
+        this.eventId = event_id;
+    }
+
     @Override
     public String toString() {
-        return "Guest [id=" + id + ", paymentMethod=" + paymentMethod + ", firstName=" + firstName + ", lastName="
-                + lastName + ", email=" + email + "]";
+        return "Guest [getId()=" + getId() + ", getPaymentMethod()=" + getPaymentMethod() + ", getFirstName()="
+                + getFirstName() + ", getLastName()=" + getLastName() + ", getEmail()=" + getEmail() + ", getEventId()="
+                + getEventId() + "]";
     }
+
+
+
+
     
 }

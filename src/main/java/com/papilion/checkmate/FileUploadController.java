@@ -3,6 +3,7 @@ package com.papilion.checkmate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
@@ -20,33 +21,98 @@ import java.util.List;
 public class FileUploadController {
 
     // Define the directory where files will be stored
-    private String UPLOAD_DIR = "./uploads/";
+    private String UPLOAD_DIR = "";
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadMultipleFiles(@RequestParam("files") List<MultipartFile> files,
-            @RequestParam("title") String str) {
-        System.out.println("GETS HERE" + str);
-        if (files.isEmpty() || str.isEmpty() || str.equals("undefined")) {
+    public ResponseEntity<String> uploadMultipleFiles(
+
+            @RequestPart(value = "files", required = false) List<MultipartFile> files,
+            @RequestParam(value = "title", required = true) String title,
+            @RequestParam(value = "oldTitle", required = false) String oldTitle,
+            @RequestParam(value = "isUpdate", required = false) Boolean isUpdate) {
+
+        System.out.println("Title: " + title);
+        System.out.println("Files: " + files);
+        System.out.println("OldTitle: " + oldTitle);
+        System.out.println("isUpdate: " + isUpdate);
+
+        if (isUpdate) {
+            if (files != null) {
+                UPLOAD_DIR = "./uploads/" + title + "/";
+                parseFiles(files, true, oldTitle);
+            } else if (title != null && oldTitle !=null) {
+                /* RENAME DIRECTORY ONLY */ 
+
+                // Original directory path
+                File oldDir = new File("./uploads/" + oldTitle + "/");
+
+
+
+                // New directory path
+                File newDir = new File("./uploads/" + title + "/");
+                System.out.println("What is my oldDIR: "+ oldDir);
+                System.out.println("What is my newDIR: "+ newDir);
+
+                System.out.println("Old Directory Absolute Path: " + oldDir.getAbsolutePath());
+                System.out.println("New Directory Absolute Path: " + newDir.getAbsolutePath());
+
+                // Attempt to rename the directory
+                if (oldDir.renameTo(newDir)) {
+                    System.out.println("Directory renamed successfully!");
+                } else {
+                    System.out.println("Failed to rename directory.");
+                }
+
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body("No files to upload... Update static info only");
+            }
+        } else if (files == null || files.isEmpty() || title.isEmpty() || title.equals("undefined")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please select files to upload.");
         } else {
-            UPLOAD_DIR += str + "/";
+            UPLOAD_DIR = "./uploads/" + title + "/";
+            parseFiles(files, false, null);
         }
 
+        return null;
+
+    }
+
+    private ResponseEntity<String> parseFiles(List<MultipartFile> files, boolean isUpdate, String oldTitle) {
         StringBuilder uploadedFiles = new StringBuilder();
+
+        // Check if an old title is provided and delete the old directory
+        if (isUpdate && oldTitle != null && !oldTitle.isEmpty()) {
+            String oldDirPath = "./uploads/" + oldTitle;
+            File oldDirectory = new File(oldDirPath);
+
+            // Check if the directory exists and delete it
+            if (oldDirectory.exists() && oldDirectory.isDirectory()) {
+                try {
+                    deleteDirectoryRecursively(oldDirectory);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body("Failed to delete old directory: " + oldTitle);
+                }
+            }
+        }
+
+        // Ensure upload directory exists
         makeDirectoryIfNotExist(UPLOAD_DIR);
+
+        // Check and delete any existing files in the upload directory
         checkIfFilesExistsIfSoDeleteAndUpload(UPLOAD_DIR);
+
+        // Process new files
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
                 try {
                     byte[] bytes = file.getBytes();
                     Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
                     Files.write(path, bytes);
-                    System.out.println(
-                            "UPLOAD_DIR + file.getOriginalFilename()" + UPLOAD_DIR + file.getOriginalFilename());
 
                     if (files.size() > 1) {
                         uploadedFiles.append(file.getOriginalFilename()).append(",");
-                    }else{
+                    } else {
                         uploadedFiles.append(file.getOriginalFilename());
                     }
 
@@ -58,10 +124,20 @@ public class FileUploadController {
             }
         }
 
-        UPLOAD_DIR = "./uploads/";
+        return ResponseEntity.ok("Files uploaded: " + uploadedFiles.toString());
+    }
 
-        System.out.println("WHAT IS UPLOADED FILE"+ uploadedFiles);
-        return ResponseEntity.status(HttpStatus.OK).body("" + uploadedFiles);
+    // Helper method to recursively delete a directory and its contents
+    private void deleteDirectoryRecursively(File directory) throws IOException {
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    deleteDirectoryRecursively(file);
+                }
+            }
+        }
+        Files.delete(directory.toPath()); // Delete the directory/file itself
     }
 
     private void checkIfFilesExistsIfSoDeleteAndUpload(String path) {
@@ -103,7 +179,7 @@ public class FileUploadController {
     @GetMapping("/membershipExists")
     public String membershipCheck() {
         // Create a file Object for Directory
-        File directoryPath = new File(UPLOAD_DIR + "\\" + "Membership");
+        File directoryPath = new File("./uploads/" + "\\" + "Membership");
         // List all files and directories
         String contents[] = directoryPath.list();
 

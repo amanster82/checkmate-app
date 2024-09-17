@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -36,7 +37,7 @@ public class EventController {
         Event myEvent = eventService.addNewEvent(event);
         try {
             guestService.readFile(myEvent);
-            memberService.readFile(myEvent);
+            memberService.readFile();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -48,6 +49,21 @@ public class EventController {
 	public List<Event> getEvents(){
         return eventService.getAllEvents();
 	}
+
+    @PutMapping("/updateEvent")
+    public Event updateEvent(@RequestBody Event event){
+        System.out.println("THIS IS MY EVENT"+ event.toString());
+        // return null;
+        Event myEvent = eventService.updateEvent(event);
+        // try {
+        //     guestService.readFile(myEvent);
+        //     memberService.readFile();
+        // } catch (FileNotFoundException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
+        return myEvent;
+    }
     
 
 }
