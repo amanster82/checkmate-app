@@ -1,6 +1,8 @@
 package com.papilion.checkmate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -10,8 +12,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="Guest")
 public class Guest {
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate the ID
     protected long id;
+    protected long ticketId;
     protected String paymentMethod;
     protected String firstName;
     protected String lastName;
@@ -30,6 +35,14 @@ public class Guest {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(long ticket_id) {
+        this.ticketId = ticket_id;
     }
 
     public String getPaymentMethod() {
@@ -75,9 +88,5 @@ public class Guest {
                 + getFirstName() + ", getLastName()=" + getLastName() + ", getEmail()=" + getEmail() + ", getEventId()="
                 + getEventId() + "]";
     }
-
-
-
-
     
 }

@@ -30,41 +30,44 @@ public class GuestService {
     //     }
     // }
   
-
-    public void readFile(Event event) throws FileNotFoundException{
-        System.out.println("WHAT IS MY EVENT"+ event);
-        File myObj = new File("./"+event.GuestListFile);
-        Scanner myReader = new Scanner(myObj);
-        Boolean firstLine = true;
-        String [] dd;
-        String id;
-
-        while (myReader.hasNextLine()) {
-
+    public void readFile(Event event) throws FileNotFoundException {
+      System.out.println("WHAT IS MY EVENT: " + event);
+      
+      // Step 1: Delete existing guests for the event
+      guestRepository.deleteByEventId(event);
+  
+      // Step 2: Read the file and add new guests
+      File myObj = new File("./" + event.getGuestListFile());  // Adjusted the getter
+      Scanner myReader = new Scanner(myObj);
+      boolean firstLine = true;
+      String[] dd;
+      String id;
+  
+      while (myReader.hasNextLine()) {
           String data = myReader.nextLine();
           Guest myGuest = new Guest();
-
-          if(firstLine){
-            firstLine = false;  
-            continue;
+  
+          if (firstLine) {
+              firstLine = false;
+              continue;  // Skip header line
           }
-
+  
           dd = data.split(",");
-          id = dd[1].replace("\"", "").trim(); //removeQuotes
-          System.out.println("MY ID IS "+id+"L".replaceAll("\\D", ""));
-          myGuest.setEventId(event);
-          myGuest.setId(Long.parseLong(id));
+          id = dd[1].replace("\"", "").trim();  // Remove quotes and trim whitespace
+          System.out.println("MY ID IS " + id.replaceAll("\\D", "") + "L");
+          
+          myGuest.setEventId(event);  // Set event reference for Guest
+          myGuest.setTicketId(Long.parseLong(id));
           myGuest.setPaymentMethod(dd[14].replace("\"", ""));
           myGuest.setFirstName(dd[15].replace("\"", ""));
           myGuest.setLastName(dd[16].replace("\"", ""));
           myGuest.setEmail(dd[17].replace("\"", ""));
-          
-          guestRepository.save(myGuest);
-
+  
+          guestRepository.save(myGuest);  // Save new guest
           System.out.println(myGuest.toString());
-        }
-        myReader.close();
-    }
+      }
+    myReader.close();
+  }
 
 }
 

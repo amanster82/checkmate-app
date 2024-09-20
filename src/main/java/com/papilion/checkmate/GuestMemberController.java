@@ -23,7 +23,6 @@ public class GuestMemberController {
     public List<Attendee> getGuestMemberData(@PathVariable("eventId") int eventId) {
         
         Event event = eventService.getEventById(eventId);
-
         return guestMemberService.processAndInsertData(event);
     }
 }

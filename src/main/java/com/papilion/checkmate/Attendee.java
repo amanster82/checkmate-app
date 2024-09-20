@@ -1,11 +1,9 @@
 package com.papilion.checkmate;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,11 +22,13 @@ public class Attendee {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event eventId;
-    
     private Long guestId;
     private Integer memberId; // Boxed type to allow null values
+    private Long guestTicketid;
     private String guestFirstName;
     private String memberFirstName;
+    private String guestLastName;
+    private String memberLastName;
     private String guestEmail;
     private String memberEmail;
     private String guestPaymentMethod;
@@ -37,20 +37,24 @@ public class Attendee {
     private LocalDate memberJoinedDate; // Changed to camelCase
     private LocalDate memberExpireDate; // Changed to camelCase
     private boolean checkedInStatus;
-    private boolean verifiedMember;
+    private boolean signedWaiver;
+    private boolean bypassMembership;
 
     public Attendee(){}
 
-    public Attendee (int Id, Event eventId, Long guestId, int memberId, String guestFirstName, String memberFirstName, 
-                          String guestEmail, String memberEmail, String guestPaymentMethod, 
-                          String memberLevel, String memberUsername, LocalDate memberJoinedDate, 
-                          LocalDate memberExpireDate, boolean checkedInStatus, boolean verifiedMember) {
-        this.Id = Id;
+    public Attendee(int id, Event eventId, Long guestId, Integer memberId, Long guestTicketid, String guestFirstName,
+            String memberFirstName, String guestLastName, String memberLastName, String guestEmail, String memberEmail,
+            String guestPaymentMethod, String memberLevel, String memberUsername, LocalDate memberJoinedDate,
+            LocalDate memberExpireDate, boolean checkedInStatus, boolean signedWaiver, boolean bypassMembership) {
+        Id = id;
         this.eventId = eventId;
         this.guestId = guestId;
         this.memberId = memberId;
+        this.guestTicketid = guestTicketid;
         this.guestFirstName = guestFirstName;
         this.memberFirstName = memberFirstName;
+        this.guestLastName = guestLastName;
+        this.memberLastName = memberLastName;
         this.guestEmail = guestEmail;
         this.memberEmail = memberEmail;
         this.guestPaymentMethod = guestPaymentMethod;
@@ -59,7 +63,8 @@ public class Attendee {
         this.memberJoinedDate = memberJoinedDate;
         this.memberExpireDate = memberExpireDate;
         this.checkedInStatus = checkedInStatus;
-        this.verifiedMember = verifiedMember;
+        this.signedWaiver = signedWaiver;
+        this.bypassMembership = bypassMembership;
     }
 
     @Override
@@ -105,6 +110,14 @@ public class Attendee {
         this.memberId = memberId;
     }
 
+    public Long getGuestTicketid() {
+        return guestTicketid;
+    }
+
+    public void setGuestTicketid(Long guestTicketid) {
+        this.guestTicketid = guestTicketid;
+    }
+    
     public String getGuestFirstName() {
         return guestFirstName;
     }
@@ -119,6 +132,22 @@ public class Attendee {
 
     public void setMemberFirstName(String memberFirstName) {
         this.memberFirstName = memberFirstName;
+    }
+
+    public String getGuestLastName() {
+        return guestLastName;
+    }
+
+    public void setGuestLastName(String guestLastName) {
+        this.guestLastName = guestLastName;
+    }
+
+    public String getMemberLastName() {
+        return memberLastName;
+    }
+
+    public void setMemberLastName(String memberLastName) {
+        this.memberLastName = memberLastName;
     }
 
     public String getGuestEmail() {
@@ -189,16 +218,24 @@ public class Attendee {
         this.checkedInStatus = checkedInStatus;
     }
 
-    public boolean isVerifiedMember() {
-        return verifiedMember;
+    public boolean getSignedWaiver() {
+        return signedWaiver;
     }
 
-    public void setVerifiedMember(boolean verifiedMember) {
-        this.verifiedMember = verifiedMember;
+    public void setSignedWaiver(boolean signedWaiver) {
+        this.signedWaiver = signedWaiver;
     }
 
     public void setMemberExpireDate(LocalDate memberExpireDate) {
         this.memberExpireDate = memberExpireDate;
+    }
+
+    public boolean isBypassMembership() {
+        return bypassMembership;
+    }
+
+    public void setBypassMembership(boolean bypassMembership) {
+        this.bypassMembership = bypassMembership;
     }
 
     @Override
@@ -208,7 +245,7 @@ public class Attendee {
                 + ", memberEmail=" + memberEmail + ", guestPaymentMethod=" + guestPaymentMethod + ", memberLevel="
                 + memberLevel + ", memberUsername=" + memberUsername + ", memberJoinedDate=" + memberJoinedDate
                 + ", memberExpireDate=" + memberExpireDate + ", checkedInStatus=" + checkedInStatus
-                + ", verifiedMember=" + verifiedMember + "]";
+                + ", signedWaiver=" + signedWaiver + "]";
     }
     
 }

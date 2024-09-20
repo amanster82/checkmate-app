@@ -1,0 +1,106 @@
+.create-event{
+    text-align: center;
+}
+
+.event-card{
+    width: 800px;
+}
+
+.event-header{
+    text-align: center;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}
+
+.flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-evenly{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.flex-left{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.flex-left{
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.flex-between{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Apply grid layout to Card */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 3 evenly spaced columns */
+    gap: 20px; /* Spacing between the grid items */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: unset !important;
+  }
+  
+  /* Grid items styling */
+  .grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .grid-item h4 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .grid-item p {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .ticket-info, .member-info {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    height: 538px;
+  }
+  
+  
+  .member-info{
+    width: 640px;
+
+  }
+
+  .Search{
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 50px;
+    margin-top: 20px;
+  }

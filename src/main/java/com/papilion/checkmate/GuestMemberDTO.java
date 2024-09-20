@@ -2,11 +2,15 @@ package com.papilion.checkmate;
 
 import java.time.LocalDate;
 
+
 public class GuestMemberDTO {
     private Long guestId;
     private Integer memberId;
+    private Long guestTicketId;
     private String guestFirstName;
     private String memberFirstName;
+    private String guestLastName;
+    private String memberLastName;
     private String guestEmail;
     private String memberEmail;
     private String guestPaymentMethod;
@@ -15,14 +19,17 @@ public class GuestMemberDTO {
     private LocalDate memberJoinedDate; // Changed to camelCase
     private LocalDate memberExpireDate; // Changed to camelCase
 
-    public GuestMemberDTO(Long guestId, Integer memberId, String guestFirstName, String memberFirstName, 
-                          String guestEmail, String memberEmail, String guestPaymentMethod, 
-                          String memberLevel, String memberUsername, LocalDate memberJoinedDate, 
-                          LocalDate memberExpireDate) {
+        public GuestMemberDTO(Long guestId, Integer memberId, Long guestTicketId, String guestFirstName, String memberFirstName,
+            String guestLastName, String memberLastName, String guestEmail, String memberEmail,
+            String guestPaymentMethod, String memberLevel, String memberUsername, LocalDate memberJoinedDate,
+            LocalDate memberExpireDate) {
         this.guestId = guestId;
         this.memberId = memberId;
+        this.guestTicketId = guestTicketId;
         this.guestFirstName = guestFirstName;
         this.memberFirstName = memberFirstName;
+        this.guestLastName = guestLastName;
+        this.memberLastName = memberLastName;
         this.guestEmail = guestEmail;
         this.memberEmail = memberEmail;
         this.guestPaymentMethod = guestPaymentMethod;
@@ -51,6 +58,14 @@ public class GuestMemberDTO {
         this.memberId = memberId;
     }
 
+    public Long getGuestTicketId() {
+        return guestTicketId;
+    }
+
+    public void setGuestTicketId(Long guestTicketId) {
+        this.guestTicketId = guestTicketId;
+    }
+
     public String getGuestFirstName() {
         return guestFirstName;
     }
@@ -65,6 +80,22 @@ public class GuestMemberDTO {
 
     public void setMemberFirstName(String memberFirstName) {
         this.memberFirstName = memberFirstName;
+    }
+
+    public String getGuestLastName() {
+        return guestLastName;
+    }
+
+    public void setGuestLastName(String guestLastName) {
+        this.guestLastName = guestLastName;
+    }
+
+    public String getMemberLastName() {
+        return memberLastName;
+    }
+
+    public void setMemberLastName(String memberLastName) {
+        this.memberLastName = memberLastName;
     }
 
     public String getGuestEmail() {

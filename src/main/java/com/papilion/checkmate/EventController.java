@@ -52,13 +52,13 @@ public class EventController {
         System.out.println("THIS IS MY EVENT"+ event.toString());
         // return null;
         Event myEvent = eventService.updateEvent(event);
-        // try {
-        //     guestService.readFile(myEvent);
-        //     memberService.readFile();
-        // } catch (FileNotFoundException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
+        try {
+            guestService.readFile(myEvent);
+            memberService.readFile();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return myEvent;
     }
     

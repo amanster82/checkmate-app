@@ -23,8 +23,25 @@ public class AttendeeService {
 
         System.out.println("FOUND! ===>" + attendeeLookup.toString());
 
+		attendeeLookup.setGuestId(attendeeJSON.getGuestId());
+		attendeeLookup.setMemberId(attendeeJSON.getMemberId()); // Integer to allow null
+		attendeeLookup.setGuestTicketid(attendeeJSON.getGuestTicketid());
 		attendeeLookup.setGuestFirstName(attendeeJSON.getGuestFirstName());
-	
+		attendeeLookup.setMemberFirstName(attendeeJSON.getMemberFirstName());
+		attendeeLookup.setGuestLastName(attendeeJSON.getGuestLastName());
+		attendeeLookup.setMemberLastName(attendeeJSON.getMemberLastName());
+		attendeeLookup.setGuestEmail(attendeeJSON.getGuestEmail());
+		attendeeLookup.setMemberEmail(attendeeJSON.getMemberEmail());
+		attendeeLookup.setGuestPaymentMethod(attendeeJSON.getGuestPaymentMethod());
+		attendeeLookup.setMemberLevel(attendeeJSON.getMemberLevel());
+		attendeeLookup.setMemberUsername(attendeeJSON.getMemberUsername());
+		attendeeLookup.setMemberJoinedDate(attendeeJSON.getMemberJoinedDate()); // Assuming LocalDate format is handled
+		attendeeLookup.setMemberExpireDate(attendeeJSON.getMemberExpireDate()); // Assuming LocalDate format is handled
+		attendeeLookup.setCheckedInStatus(attendeeJSON.isCheckedInStatus()); // boolean
+		attendeeLookup.setSignedWaiver(attendeeJSON.getSignedWaiver()); // boolean
+		attendeeLookup.setBypassMembership(attendeeJSON.isBypassMembership()); // boolean
+
+		attendeeRepository.save(attendeeLookup);
 	}
 			
 }

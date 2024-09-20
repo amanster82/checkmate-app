@@ -101,6 +101,7 @@ function app() {
         const fileData = new FormData();
         fileData.append('title', 'Membership');
         fileData.append('files', fileB[0]);
+        fileData.append('isUpdate', false);
         if (fileData.entries().next().value[1] !== null) {
             const response = await axios.post('http://localhost:8080/api/files/upload', fileData, {
                 headers: {
